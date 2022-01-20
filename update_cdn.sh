@@ -1,6 +1,4 @@
 #!/bin/bash
-SCRIPT_PATH="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
-
 usage() {
   echo "\
 
@@ -47,9 +45,9 @@ fi
 
 
 if [[ "${JSON}" == "true" ]]; then
-        echo "hcloud firewall describe "${TYPE}" -o json | jq" > "${SCRIPT_PATH}/run.sh"
-	bash -x "${SCRIPT_PATH}/run.sh"
-	rm -f "${SCRIPT_PATH}/run.sh"
+        echo "hcloud firewall describe "${TYPE}" -o json | jq" > "/tmp/run-hcloud.sh"
+		bash -x "/tmp/run-hcloud.sh"
+		rm -f "/tmp/run-hcloud.sh"
         exit 0
 fi
 
@@ -74,7 +72,7 @@ case ${ACTION} in
 		esac
 	;;
 	*) usage ; exit 1 ;;
-esac > "${SCRIPT_PATH}/run.sh"
+esac > "/tmp/run-hcloud.sh"
 
-bash -x "${SCRIPT_PATH}/run.sh"
-rm -f "${SCRIPT_PATH}/run.sh"
+bash -x "/tmp/run-hcloud.sh"
+rm -f "/tmp/run-hcloud.sh"
